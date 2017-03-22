@@ -1,0 +1,5 @@
+name: Skinny
+main: tw.davy.minecraft.skinny.Skinny
+load: STARTUP
+version: 1.0-SNAPSHOT
+authors: [Davy]
