@@ -1,5 +1,5 @@
 group 'tw.davy.minecraft.skinny'
-version '1.0-SNAPSHOT'
+version '1.1-SNAPSHOT'
 
 apply plugin: 'java'
 
@@ -28,6 +28,11 @@ repositories {
         name 'spigotmc-nexus'
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
     }
+
+    maven {
+        name 'dmulloy2-repo'
+        url 'http://repo.dmulloy2.net/content/groups/public'
+    }
 }
 
 dependencies {
@@ -35,7 +40,7 @@ dependencies {
     compileClasspath 'org.bukkit:bukkit:1.11.2-R0.1-SNAPSHOT', {
         ext { fatJarExclude = true }
     }
-    compileClasspath 'io.netty:netty-handler:4.1.9.Final', {
+    compileClasspath 'com.comphenix.protocol:ProtocolLib-API:4.2.0', {
         ext { fatJarExclude = true }
     }
 }
