@@ -1,5 +1,6 @@
 package tw.davy.minecraft.skinny;
 
+import com.comphenix.protocol.AsynchronousManager;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
@@ -36,10 +37,11 @@ public class Skinny extends JavaPlugin implements Listener {
         mProviderManager = new ProviderManager(enableProviders);
 
         mProtocolManager = ProtocolLibrary.getProtocolManager();
-        mProtocolManager.addPacketListener(new PlayerInfoPacketAdapter(this));
+        final AsynchronousManager asynchronousManager = mProtocolManager.getAsynchronousManager();
+        asynchronousManager.registerAsyncHandler(new PlayerInfoPacketAdapter(this)).start();
         // These might not work
-        mProtocolManager.addPacketListener(new TileEntityDataPacketAdapter(this));
-        mProtocolManager.addPacketListener(new SkullItemDataPacketAdapter(this));
+        asynchronousManager.registerAsyncHandler(new TileEntityDataPacketAdapter(this)).start();
+        asynchronousManager.registerAsyncHandler(new SkullItemDataPacketAdapter(this)).start();
     }
 
     @Override
