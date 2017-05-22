@@ -40,19 +40,22 @@ public class PlayerInfoPacketAdapter extends PacketAdapter {
                 return;
 
             final List<PlayerInfoData> datas = packet.getPlayerInfoDataLists().read(0);
-            for (final PlayerInfoData data : datas) {
-                final WrappedGameProfile profile = data.getProfile();
-                final String name = profile.getName();
-                final SignedSkin skin = getStorageManager().getSkin(name);
+            if (datas.size() < 0)
+                return;
 
-                if (skin == null)
-                    return;
+            final PlayerInfoData data = datas.get(0);
+            final WrappedGameProfile profile = data.getProfile();
+            final String name = profile.getName();
+            final SignedSkin skin = getStorageManager().getSkin(name);
 
-                final Multimap<String, WrappedSignedProperty> properties = profile.getProperties();
-                properties.clear();
-                properties.put("textures",
-                        WrappedSignedProperty.fromValues("textures", skin.getValue(), skin.getSignature()));
-            }
+            if (skin == null)
+                return;
+
+            final Multimap<String, WrappedSignedProperty> properties = profile.getProperties();
+            properties.clear();
+            properties.put("textures",
+                    WrappedSignedProperty.fromValues("textures", skin.getValue(), skin.getSignature()));
+            packet.getPlayerInfoDataLists().write(0, datas);
         } catch (FieldAccessException | IllegalStateException ignored) {
         }
     }
